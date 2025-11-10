@@ -1,0 +1,170 @@
+📄 Project: Offline AI Changelog Assistant
+1. Project Goal
+To create a 100% offline, Python-based application that acts as a documentation assistant. The system will feature a simple web interface, read local software project files, analyze code changes using Git, and use a local LLM to generate "What's New" documentation in a user-defined format.
+
+2. Core Features
+100% Offline: All components, including the AI model, run locally. No internet connection is required.
+
+Simple Web Interface: A browser-based UI (HTML/CSS/JS) for interacting with the assistant.
+
+Python Backend: The entire backend logic, server, and model inference is handled by Python.
+
+Local File System Access: The assistant can be pointed to a project directory to read files and analyze the codebase.
+
+Git Integration: The system's primary data source for changes is the project's Git history (specifically git diff).
+
+Local LLM Inference: Uses a local model file (GGUF) loaded directly into the Python application for text generation.
+
+3. System Architecture
+The project is built on a simple client-server model that runs entirely on your local machine.
+
+Component 1: The Frontend (Web UI)
+
+Description: A single HTML page with JavaScript that provides the user interface.
+
+Function: It displays controls (like a 'Generate' button) and text areas. It sends tasks to the Python backend (via a fetch request) and displays the returned documentation.
+
+Component 2: The Backend (Python Server)
+
+Description: A lightweight Python web server using Flask (or FastAPI). This is the "brain" of the operation.
+
+Function:
+
+Serves the index.html file to the browser.
+
+Provides an API endpoint (e.g., /api/generate_docs).
+
+File System Logic: When called, it uses Python's os and pathlib libraries to inspect the user-specified project folder.
+
+Git Logic: It uses a Python library (like GitPython or subprocess) to run git diff commands on that project's folder to get the exact lines of code that have changed.
+
+Prompt Engineering: It formats this git diff output and other file contents into a clear, detailed prompt for the AI.
+
+Model-Gekoppelde: It passes this prompt to the Model component and waits for the generated text.
+
+Responds to the Frontend with the final documentation.
+
+Component 3: The Model (Python LLM Loader)
+
+Description: This is not a separate server, but a Python library imported directly by the Backend.
+
+Technology: llama-cpp-python.
+
+Function:
+
+Loads a large model file (e.g., mistral-7b.gguf) from your hard drive into your computer's memory (RAM or VRAM).
+
+Provides a simple function (e.g., llm.create_completion()) that the Backend can call with a prompt.
+
+Generates text based on the prompt, using your CPU or GPU.
+
+Returns the generated text to the Backend.
+
+4. Technology Stack
+Backend Server: Flask (Recommended for its simplicity)
+
+LLM Inference: llama-cpp-python (The core library for running the model in Python)
+
+Git Interface: GitPython (A Python library for interacting with Git repositories)
+
+Frontend: HTML5, CSS3, and JavaScript (ES6+)
+
+The Model File: A GGUF-formatted model, such as:
+
+Best Choice: Mistral-7B-Instruct.Q4_K_M.gguf (A great balance of speed and intelligence)
+
+Next Big Thing (Future): A high-performance 8B+ model like a new Llama or Mistral variant.
+
+5. Development & Setup Plan (Blueprint)
+This is the phased plan to build the project.
+
+Phase 1: Environment Setup
+Create Project Folder: mkdir ai_assistant
+
+Create Python Virtual Environment:
+
+Bash
+
+cd ai_assistant
+python3 -m venv venv
+source venv/bin/activate
+Install Python Libraries:
+
+Bash
+
+pip install flask llama-cpp-python GitPython
+Get the Model:
+
+Go to a site like Hugging Face.
+
+Search for "Mistral 7B Instruct GGUF".
+
+Download a medium-sized quantize file (e.g., Q4_K_M or Q5_K_M).
+
+Save this .gguf file inside your ai_assistant project folder.
+
+Phase 2: Build the Backend (app.py)
+Create app.py: This file will contain your Flask server.
+
+Tasks for this file:
+
+Import Flask, Llama (from llama_cpp), and Repo (from git).
+
+Initialize the Llama object by pointing it to your .gguf model file.
+
+Create a Flask route / that serves an index.html file.
+
+Create a Flask route /api/generate_docs (as a POST method).
+
+Inside this API route:
+
+Get the project path from the request.
+
+Use Repo(project_path) to open the Git repository.
+
+Get the diff (e.g., repo.index.diff(None) for staged changes).
+
+Create a prompt string (e.g., "Generate documentation for this diff: \n" + diff_text).
+
+Call the llm() function with your prompt.
+
+Return the model's output as a JSON response.
+
+Phase 3: Build the Frontend (index.html)
+Create index.html: A basic HTML file.
+
+Tasks for this file:
+
+Add a text input for the "Project Folder Path".
+
+Add a large text area for "Custom Prompt / Format".
+
+Add a "Generate" button.
+
+Add a <pre> or <div> tag to display the results.
+
+Write a JavaScript fetch() function that:
+
+Triggers on button click.
+
+Gets the values from the inputs.
+
+Sends them to http://127.0.0.1:5000/api/generate_docs.
+
+Waits for the JSON response.
+
+Puts the generated documentation into the result <div>.
+
+Phase 4: Run the Application
+Run the Backend:
+
+Bash
+
+python app.py
+Use the Frontend:
+
+Open your web browser.
+
+Go to http://127.0.0.1:5000 (or http://localhost:5000).
+
+The index.html page will load, and you can now use your offline assistant.
