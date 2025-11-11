@@ -1,0 +1,25 @@
+Step 3: Add the AI Model File
+📋 Instructions
+Goal: To copy the large AI model file (model.gguf) from your USB drive into your ai_assistant project folder. The Python code we write will look for this file inside the project directory.
+
+Make sure your USB drive is still plugged in.
+
+We will use the cp (copy) command.
+
+You need to provide the "source" path (where the file is now, on your USB) and the "destination" path (where the file should go, which is your ~/ai_assistant folder).
+
+After copying, we'll use the ls -lh command to list the files in the project folder. This will let you verify that the model.gguf file is there and see its size.
+
+💻 Commands
+(Run these in your terminal)
+
+Bash
+
+# 1. Copy the model file from your USB to your project folder
+#    (!!! Replace '/media/your_username/MY_USB' with your actual USB path)
+cp /media/your_username/MY_USB/model.gguf ~/ai_assistant/
+
+# 2. Verify the file is in your project folder
+#    You should see 'model.gguf' listed (around 4.4GB)
+ls -lh ~/ai_assistant/
+Your ai_assistant folder now contains the venv folder and the model.gguf file. All the necessary components are in place.
