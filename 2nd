@@ -1,0 +1,48 @@
+Step 2: Create Project & Install Python Libraries (Offline)
+📋 Instructions
+Goal: To create your ai_assistant project folder, set up an isolated Python virtual environment (venv), and install flask, GitPython, and llama-cpp-python from your USB drive.
+
+Open a Terminal. (You can close the one from Step 1).
+
+Navigate to your Home Directory: This is a good, standard place to create new projects.
+
+Create the Project Folder: Make the ai_assistant directory.
+
+Navigate Into Your New Folder.
+
+Create the Virtual Environment: Use the python3 -m venv command to create a private Python environment named venv. This keeps your project's libraries separate from the system.
+
+Activate the Virtual Environment: You must "source" the activate script. This is crucial. Your terminal prompt will change to show (venv) at the beginning. This must be active for the next command to work.
+
+Install Python Libraries: Now, run the pip install command. This is the most important command.
+
+--no-index: Tells pip "DO NOT connect to the internet."
+
+--find-links=...: Tells pip "Look in this folder on my USB drive for the files." (You must use the correct path to your USB).
+
+This command will take a few minutes. The llama-cpp-python library will use the C++ tools you installed in Step 1 to compile itself. This is normal.
+
+💻 Commands
+(Run these in your terminal)
+
+Bash
+
+# 1. Go to your home directory
+cd ~
+
+# 2. Create the project folder
+mkdir ai_assistant
+
+# 3. Enter the new folder
+cd ai_assistant
+
+# 4. Create the virtual environment
+python3 -m venv venv
+
+# 5. Activate the virtual environment
+source venv/bin/activate
+
+# 6. Install all Python libraries from your USB
+#    (!!! Replace '/media/your_username/MY_USB' with your actual USB path)
+pip install --no-index --find-links=/media/your_username/MY_USB/python_wheels flask GitPython llama-cpp-python
+After this completes, your venv folder will contain all the necessary Python libraries.
