@@ -1,0 +1,62 @@
+Step 6: Run and Test Your Application
+📋 Instructions
+Goal: To run your Python server, open the web interface, and test the full application.
+
+Open Your Terminal: Navigate to your project folder (~/ai_assistant).
+
+Activate Your Environment: You must activate your venv every time you start the server.
+
+Bash
+
+cd ~/ai_assistant
+source venv/bin/activate
+Your prompt should now show (venv).
+
+Run the Backend: Start the app.py script.
+
+Bash
+
+python3 app.py
+Wait for the Model to Load: Your terminal will show a lot of text. It will first say "Initializing database..." and then "Loading LLM...". It will take 30 to 90 seconds (or more) for the model to load into your computer's RAM.
+
+Do not close this terminal. It is your server.
+
+The process is finished when you see a line like: * Running on http://127.0.0.1:5000
+
+Open Your Web Browser: Go to the address http://127.0.0.1:5000 (or http://localhost:5000).
+
+You should see the "Offline AI Changelog Assistant" interface you just created.
+
+Test It:
+
+Find a Project: You need the full path to another project on your computer (one that uses Git). For example, it might be /home/your_username/my_other_project.
+
+Fill the Form:
+
+In "Full Path to Project Folder," paste in the path (e.g., /home/your_username/my_other_project).
+
+In "Documentation Format / Task," type a simple prompt, like: Write a simple bulleted list of the new changes.
+
+Click "Generate": The button will change to "Generating..."
+
+Wait for the Result: This will also take some time (15-60 seconds) as the AI is "thinking."
+
+Check the Result: The generated documentation will appear in the "Results" box.
+
+To Stop the Server: Go back to your terminal (the one running app.py) and press Ctrl+C.
+
+💻 Commands
+(Run these in your terminal)
+
+Bash
+
+# 1. Go to your project folder
+cd ~/ai_assistant
+
+# 2. Activate the virtual environment
+source venv/bin/activate
+
+# 3. Run the application
+#    (This will take a minute to load the model)
+python3 app.py
+(Then, open your browser and go to http://127.0.0.1:5000)
