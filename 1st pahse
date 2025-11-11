@@ -1,0 +1,110 @@
+Phase 1: On Your ONLINE Machine (The "Download" Step)
+You need to gather three sets of files on your USB drive.
+
+1. Gather System Packages (.deb files)
+We need the installers for git, pip, venv, and the C++ build-essential tools. apt has a way to download packages without installing them.
+
+Plug in your USB drive.
+
+Open a terminal on your online Ubuntu machine (or a "live" Ubuntu USB).
+
+Create a folder for all the system packages:
+
+Bash
+
+# (Assuming your USB is mounted at /media/user/MY_USB)
+mkdir -p /media/user/MY_USB/system_packages
+Important: Clear your apt cache to ensure you download fresh copies.
+
+Bash
+
+sudo apt clean
+Tell apt to download only the packages and all their dependencies:
+
+Bash
+
+sudo apt install --download-only -y git python3-pip python3-venv build-essential
+Now, copy all the downloaded .deb files from your system's apt cache into your USB folder.
+
+Bash
+
+# This copies all the .deb files you just downloaded
+cp /var/cache/apt/archives/*.deb /media/user/MY_USB/system_packages/
+2. Gather Python Libraries (Wheels)
+Next, we need the Python libraries. pip also has a "download" command.
+
+Create a folder on your USB for the Python files:
+
+Bash
+
+mkdir -p /media/user/MY_USB/python_wheels
+Use pip download to get the libraries and all their dependencies.
+
+Bash
+
+pip download -d /media/user/MY_USB/python_wheels flask GitPython llama-cpp-python
+This will fill your python_wheels folder with all the .whl and .tar.gz files needed.
+
+3. Download the AI Model (.gguf file)
+This is just a single file download. Save it directly to your USB.
+
+Go to this URL in your browser: https://huggingface.co/TheBloke/Mistral-7B-Instruct-v0.2-GGUF/resolve/main/mistral-7b-instruct-v0.2.Q4_K_M.gguf
+
+Your browser will download the model.gguf file (it's ~4.37 GB).
+
+Save or move this file to the root of your USB drive.
+
+Phase 2: On Your OFFLINE Machine (The "Install" Step)
+You are now back at your offline Ubuntu computer. Plug in the USB drive.
+
+1. Install System Packages
+Open a terminal and navigate to the system_packages folder on your USB:
+
+Bash
+
+# (Your USB might be at a different path)
+cd /media/user/MY_USB/system_packages
+Install all the .deb files at once. Using apt this way is smart—it will figure out the correct dependency order from the files in the folder.
+
+Bash
+
+# This tells apt to install all .deb files in the current directory
+sudo apt install ./*.deb
+This will install git, pip, venv, and all the C++ build tools.
+
+2. Install Python Libraries
+First, create your project folder and virtual environment, just as we planned:
+
+Bash
+
+mkdir ~/ai_assistant
+cd ~/ai_assistant
+python3 -m venv venv
+source venv/bin/activate
+Now, tell pip to install the libraries. We must use two special flags:
+
+--no-index: This is critical. It tells pip "DO NOT connect to the internet."
+
+--find-links: This tells pip "Look in this local folder for the files you need."
+
+Run this command (replace the USB path with your actual path):
+
+Bash
+
+pip install --no-index --find-links=/media/user/MY_USB/python_wheels flask GitPython llama-cpp-python
+pip will now install all the libraries and their dependencies from your USB. The llama-cpp-python installation will use the C++ build tools you installed in the previous step to compile itself.
+
+3. Copy the AI Model
+Finally, copy the model file into your new project folder:
+
+Bash
+
+cp /media/user/MY_USB/model.gguf ~/ai_assistant/
+✅ Setup Complete (Offline)
+You have now successfully installed everything on a completely offline machine.
+
+Your ai_assistant folder is ready and contains:
+
+ai_assistant/
+├── venv/          (Your Python virtual environment with all libraries)
+└── model.gguf     (The AI model file)
