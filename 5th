@@ -1,0 +1,32 @@
+Step 5: Create the Frontend (index.html)
+📋 Instructions
+Goal: To create the HTML file that will be your user interface. This file will be served by Flask and will allow you to send requests to your backend.
+
+Make sure you are in your project directory (~/ai_assistant).
+
+Create a new file named index.html using a text editor (e.g., nano index.html).
+
+Copy all the code from the block below and paste it into this new index.html file.
+
+How this file works:
+
+HTML: Creates the basic page structure: a title, two text inputs (for project path and your prompt), a "Generate" button, and a <div> to show the results.
+
+CSS: A small <style> block is included to make it look clean and usable.
+
+JavaScript: A <script> block at the bottom contains all the logic. It waits for you to click the button, then it:
+
+Gets the text from the input boxes.
+
+Uses fetch() to send this data to your /api/generate_docs endpoint (which your app.py is running).
+
+Waits for the JSON response from the backend.
+
+Displays the documentation (or an error message) in the results <div>.
+
+Save the file and exit the text editor.
+
+This is the final file you need to create. After this step, your application is complete and ready to be tested.
+
+💻 Code (index.html)
+(Copy this entire block into your index.html file)
