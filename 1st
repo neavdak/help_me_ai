@@ -1,0 +1,29 @@
+Step 1: Install System Prerequisites (Offline)
+📋 Instructions
+Goal: To install git, python3, pip, and the C++ build-essential tools from the .deb files you downloaded onto your USB drive.
+
+Plug your USB drive into your offline Ubuntu machine.
+
+Open a terminal.
+
+Find the path to your USB drive. It's usually mounted under /media/your_username/. You can use the ls /media/your_username/ command to see the name. Let's assume its name is MY_USB.
+
+Navigate to the system_packages folder you created on the USB, which contains all the .deb files.
+
+Run the apt install command using the . prefix. This tells apt to install all .deb files from the current directory (the . symbol) and to handle their dependencies correctly (which is why you downloaded them all).
+
+This single command will install everything we need to build the Python environment.
+
+💻 Commands
+(Run these in your terminal)
+
+Bash
+
+# 1. Navigate to your USB folder
+#    (Replace with your actual path)
+cd /media/your_username/MY_USB/system_packages
+
+# 2. Install all .deb files from this folder
+#    This will ask for your password
+sudo apt install ./*.deb
+Once this is complete, git, pip, venv, and the C++ compiler are all installed on your offline system.
