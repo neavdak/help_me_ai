@@ -29,13 +29,15 @@ def load_model():
     bnb_config = BitsAndBytesConfig(
         load_in_4bit=True,
         bnb_4bit_quant_type="nf4",
-        bnb_4bit_compute_dtype=torch.bfloat16
+        bnb_4bit_compute_dtype=torch.bfloat16,
+        llm_int8_enable_fp32_cpu_offload=True
     )
     
     model = AutoModelForCausalLM.from_pretrained(
         BASE_MODEL_ID,
         quantization_config=bnb_config,
-        device_map="auto"
+        device_map="auto",
+        low_cpu_mem_usage=True
     )
     
     # model = PeftModel.from_pretrained(base_model, ADAPTER_PATH) # Disabled
