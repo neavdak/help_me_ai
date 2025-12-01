@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+final_model_qlora/
+results/
+*.safetensors
+*.bin
+*.pt
