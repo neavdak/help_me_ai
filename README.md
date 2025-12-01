@@ -1,6 +1,6 @@
 # AI Documentation Generator & Chat Assistant
 
-This is a local **OFFLINE** AI application powered by **Qwen 2.5 (14B)**. It allows you to:
+This is a local **OFFLINE** AI application powered by **Qwen 2.5 (7B)**. It allows you to:
 1.  **Chat** with the model (with file context support).
 2.  **Generate Documentation** automatically from code changes (Git diffs) and templates.
 
@@ -36,7 +36,7 @@ setup.bat
 The setup script will:
 1. Create a virtual environment
 2. Install all Python packages
-3. **Download the 14B model (~10GB)** to local cache
+3.  **First Run**: The application will automatically download the `Qwen/Qwen2.5-7B-Instruct` model (~5GB) from Hugging Face.he
 4. Verify everything works
 
 **After setup completes, you can disconnect from the internet permanently.**

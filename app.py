@@ -14,12 +14,12 @@ def clear_gpu_memory():
     gc.collect()
 
 # --- CONFIGURATION ---
-BASE_MODEL_ID = "Qwen/Qwen2.5-14B-Instruct"
+BASE_MODEL_ID = "Qwen/Qwen2.5-7B-Instruct"
 # ADAPTER_PATH = "./final_model_qlora" # Disabled
 
 # Set page title
-st.set_page_config(page_title="Qwen 2.5 (14B) Chat", page_icon="🤖")
-st.title("🤖 Qwen 2.5 (14B) - High Quality AI")
+st.set_page_config(page_title="Qwen 2.5 (7B) Chat", page_icon="🤖")
+st.title("🤖 Qwen 2.5 (7B) - Offline AI")
 
 # --- MODEL LOADING ---
 @st.cache_resource
@@ -29,15 +29,13 @@ def load_model():
     bnb_config = BitsAndBytesConfig(
         load_in_4bit=True,
         bnb_4bit_quant_type="nf4",
-        bnb_4bit_compute_dtype=torch.bfloat16,
-        llm_int8_enable_fp32_cpu_offload=True
+        bnb_4bit_compute_dtype=torch.bfloat16
     )
     
     model = AutoModelForCausalLM.from_pretrained(
         BASE_MODEL_ID,
         quantization_config=bnb_config,
-        device_map="auto",
-        low_cpu_mem_usage=True
+        device_map="auto"
     )
     
     # model = PeftModel.from_pretrained(base_model, ADAPTER_PATH) # Disabled
