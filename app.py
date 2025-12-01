@@ -13,19 +13,35 @@ def clear_gpu_memory():
     torch.cuda.empty_cache()
     gc.collect()
 
-# --- CONFIGURATION ---
-BASE_MODEL_ID = "Qwen/Qwen2.5-7B-Instruct"
-# ADAPTER_PATH = "./final_model_qlora" # Disabled
 
 # Set page title
-st.set_page_config(page_title="Qwen 2.5 (7B) Chat", page_icon="🤖")
-st.title("🤖 Qwen 2.5 (7B) - Offline AI")
+st.set_page_config(page_title="Qwen 2.5 Chat", page_icon="🤖")
+st.title("🤖 Qwen 2.5 - Offline AI")
+
+# --- SIDEBAR & MODEL SELECTION ---
+with st.sidebar:
+    st.header("⚙️ Model Selection")
+    model_choice = st.selectbox(
+        "Choose Model:",
+        options=["Qwen/Qwen2.5-7B-Instruct", "Qwen/Qwen2.5-14B-Instruct"],
+        index=0,
+        help="7B: Faster, fits in 8GB VRAM | 14B: Higher quality, needs CPU offloading"
+    )
+    
+    st.info(f"**Selected:** {model_choice.split('/')[-1]}")
+    
+    if "7B" in model_choice:
+        st.success("✅ Recommended for RTX 4060 (8GB VRAM)")
+    else:
+        st.warning("⚠️ 14B requires CPU offloading on 8GB VRAM")
 
 # --- MODEL LOADING ---
 @st.cache_resource
-def load_model():
-    """Loads the model and tokenizer. Cached to run only once."""
-    print("Loading model...")
+def load_model(model_id):
+    """Loads the model and tokenizer. Cached per model."""
+    print(f"Loading model: {model_id}...")
+    
+    # Configure quantization
     bnb_config = BitsAndBytesConfig(
         load_in_4bit=True,
         bnb_4bit_quant_type="nf4",
@@ -33,20 +49,19 @@ def load_model():
     )
     
     model = AutoModelForCausalLM.from_pretrained(
-        BASE_MODEL_ID,
+        model_id,
         quantization_config=bnb_config,
         device_map="auto"
     )
     
-    # model = PeftModel.from_pretrained(base_model, ADAPTER_PATH) # Disabled
-    tokenizer = AutoTokenizer.from_pretrained(BASE_MODEL_ID)
+    tokenizer = AutoTokenizer.from_pretrained(model_id)
     return model, tokenizer
 
-# Load model (this will show a spinner on first load)
-with st.spinner("Loading model... This might take a minute."):
-    model, tokenizer = load_model()
+# Load selected model
+with st.spinner(f"Loading {model_choice.split('/')[-1]}... This might take a minute."):
+    model, tokenizer = load_model(model_choice)
 
-# --- SIDEBAR & CONFIG ---
+# --- SIDEBAR CONTROLS (continued) ---
 with st.sidebar:
     st.header("Mode")
     app_mode = st.radio("Select Mode", ["Chat", "Doc Generator"])

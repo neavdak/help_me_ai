@@ -7,6 +7,7 @@ This is a local **OFFLINE** AI application powered by **Qwen 2.5 (7B)**. It allo
 Works **completely offline** after initial setup.
 
 ## Features
+- **Model Selection**: Choose between 7B (faster) or 14B (higher quality) models
 - **Fully Offline & Private**: Runs entirely on your local machine after setup.
 - **Large Context**: Supports up to 128k tokens context.
 - **Doc Generator**: Analyzes your code changes and fills out documentation templates (PDF/Word).
@@ -36,7 +37,7 @@ setup.bat
 The setup script will:
 1. Create a virtual environment
 2. Install all Python packages
-3.  **First Run**: The application will automatically download the `Qwen/Qwen2.5-7B-Instruct` model (~5GB) from Hugging Face.he
+3. **Download BOTH models** (~23GB total: 7B + 14B) to local cache
 4. Verify everything works
 
 **After setup completes, you can disconnect from the internet permanently.**
