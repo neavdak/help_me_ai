@@ -14,13 +14,12 @@ def clear_gpu_memory():
     gc.collect()
 
 # --- CONFIGURATION ---
-# --- CONFIGURATION ---
-BASE_MODEL_ID = "Qwen/Qwen2.5-7B-Instruct"
+BASE_MODEL_ID = "Qwen/Qwen2.5-14B-Instruct"
 # ADAPTER_PATH = "./final_model_qlora" # Disabled
 
 # Set page title
-st.set_page_config(page_title="Qwen 2.5 (7B) Chat", page_icon="🤖")
-st.title("🤖 Qwen 2.5 (7B) - Production Ready")
+st.set_page_config(page_title="Qwen 2.5 (14B) Chat", page_icon="🤖")
+st.title("🤖 Qwen 2.5 (14B) - High Quality AI")
 
 # --- MODEL LOADING ---
 @st.cache_resource

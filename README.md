@@ -1,6 +1,6 @@
 # AI Documentation Generator & Chat Assistant
 
-This is a local AI application powered by **Qwen 2.5 (7B)**. It allows you to:
+This is a local AI application powered by **Qwen 2.5 (14B)**. It allows you to:
 1.  **Chat** with the model (with file context support).
 2.  **Generate Documentation** automatically from code changes (Git diffs) and templates.
 
@@ -38,13 +38,14 @@ It is designed to run offline on consumer hardware (e.g., NVIDIA RTX 4060 with 8
     streamlit run app.py
     ```
 
-2.  **First Run**: The application will automatically download the `Qwen/Qwen2.5-7B-Instruct` model (~5GB) from Hugging Face.
+2.  **First Run**: The application will automatically download the `Qwen/Qwen2.5-14B-Instruct` model (~10GB) from Hugging Face.
 
 3.  **Modes**:
     - **Chat**: Upload files and ask questions.
     - **Doc Generator**: Point to a code folder, upload a template, and generate reports.
 
 ## Hardware Requirements
-- **GPU**: NVIDIA GPU with at least 8GB VRAM (RTX 3060/4060 or better).
-- **RAM**: 16GB+ recommended (64GB is ideal for offloading).
+- **GPU**: NVIDIA GPU with 8GB+ VRAM (RTX 3060/4060 or better).
+- **RAM**: 32GB+ recommended (64GB is ideal for layer offloading).
 - **OS**: Linux or Windows (with WSL2).
+- **Note**: With 8GB VRAM, some layers will offload to RAM. This is automatic and works seamlessly.
